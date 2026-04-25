@@ -14,3 +14,7 @@ mvn spring-boot:run
 
 ## 🌐 URL
 http://localhost:8081/api/usuarios
+
+## Autores
+- Janet Huaylla Huayllas
+- Bairo Pasten Codoceo
