@@ -4,13 +4,18 @@ import com.cordillera.msusuarios.model.Rol;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+/**
+ * DTO de entrada para creación/actualización de Usuario.
+ * Solo expone los campos que el cliente puede enviar.
+ * El ID y fechas los asigna el sistema automáticamente.
+ */
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class UsuarioRequestDTO {
 
     @NotBlank(message = "El nombre es obligatorio")

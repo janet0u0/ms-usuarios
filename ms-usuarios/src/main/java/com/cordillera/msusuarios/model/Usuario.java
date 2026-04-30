@@ -1,9 +1,24 @@
 package com.cordillera.msusuarios.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.time.LocalDateTime;
 
+/**
+ * Entidad Usuario - MS-Usuarios
+ * Representa un usuario del sistema con su rol (RBAC).
+ * El password se oculta en las respuestas JSON con @JsonIgnore.
+ *
+ * Patrón aplicado: Repository Pattern
+ * Esta entidad es gestionada por UsuarioRepository
+ * que abstrae el acceso a la base de datos.
+ */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(
     name = "usuarios",
@@ -37,63 +52,22 @@ public class Usuario {
     @Column(nullable = false)
     private LocalDateTime actualizadoEn;
 
-    public Usuario() {
-    }
-
+    /**
+     * Se ejecuta automáticamente antes de insertar.
+     * Asigna fechas de creación y actualización.
+     */
     @PrePersist
     public void prePersist() {
         this.creadoEn = LocalDateTime.now();
         this.actualizadoEn = this.creadoEn;
     }
 
+    /**
+     * Se ejecuta automáticamente antes de actualizar.
+     * Actualiza la fecha de modificación.
+     */
     @PreUpdate
     public void preUpdate() {
         this.actualizadoEn = LocalDateTime.now();
-    }
-
-    // GETTERS Y SETTERS
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Rol getRol() {
-        return rol;
-    }
-
-    public void setRol(Rol rol) {
-        this.rol = rol;
-    }
-
-    public LocalDateTime getCreadoEn() {
-        return creadoEn;
-    }
-
-    public LocalDateTime getActualizadoEn() {
-        return actualizadoEn;
     }
 }

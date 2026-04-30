@@ -2,6 +2,10 @@ package com.cordillera.msusuarios.exception;
 
 import java.io.Serial;
 
+/**
+ * Se lanza cuando no se encuentra un recurso en la base de datos.
+ * Buena práctica: usar excepciones específicas para un manejo de errores más claro.
+ */
 public class ResourceNotFoundException extends RuntimeException {
 
     @Serial
