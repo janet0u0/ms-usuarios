@@ -11,9 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Controller REST - Microservicio de Usuarios
- * Grupo Cordillera
- *
  * Gestiona autenticación y control de acceso (RBAC).
  * Recibe DTOs para separar la capa de presentación del modelo.
  */

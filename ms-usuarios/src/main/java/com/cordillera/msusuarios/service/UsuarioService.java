@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * Servicio de Gestión de Usuarios - MS-Usuarios
  * Contiene la lógica de negocio del microservicio.
  *
  * Patrón aplicado: Repository Pattern

@@ -1,27 +1,22 @@
 package com.cordillera.msusuarios.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.lang.NonNull;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-/**
- * Configuración CORS - MS-Usuarios
- * Permite que el frontend (React/Angular) consuma
- * los endpoints del microservicio sin restricciones
- * de origen cruzado.
- */
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
 
     @Override
-    public void addCorsMappings(CorsRegistry registry) {
+    public void addCorsMappings(@NonNull CorsRegistry registry) {
         registry.addMapping("/api/**")
                 .allowedOrigins(
-                        "http://localhost:4200",  // Angular
-                        "http://localhost:3000"   // React
+                        "http://localhost:4200",
+                        "http://localhost:3000"
                 )
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                .allowedHeaders("Authorization", "Content-Type")
+                .allowedMethods("*")
+                .allowedHeaders("*")
                 .allowCredentials(false);
     }
 }
