@@ -2,16 +2,19 @@ package com.cordillera.msusuarios.model;
 
 /**
  * Enum Rol - MS-Usuarios
- * Define los roles del sistema RBAC (Control de Acceso Basado en Roles).
- * Cada rol determina qué información puede ver el usuario en el dashboard:
- *  - ADMIN:      Acceso total al sistema
- *  - ANALISTA:   Ve KPIs detallados y stock
- *  - SUPERVISOR: Ve KPIs operativos y alertas
+ * Define los roles del sistema RBAC basados en el caso Grupo Cordillera.
+ *
+ * Roles:
+ *  - EJECUTIVO:     Alta Gerencia - Toma decisiones estratégicas
+ *  - ANALISTA:      Analista de Negocio - Analiza métricas y KPIs
+ *  - SUPERVISOR:    Admin. de Datos - Centraliza y limpia información
+ *  - ADMIN_SISTEMA: Admin. del Sistema - Seguridad y estabilidad técnica
  */
 public enum Rol {
-    ADMIN("Administrador"),
-    ANALISTA("Analista"),
-    SUPERVISOR("Supervisor");
+    EJECUTIVO("Alta Gerencia"),
+    ANALISTA("Analista de Negocio"),
+    SUPERVISOR("Administrador de Datos"),
+    ADMIN_SISTEMA("Administrador del Sistema");
 
     private final String descripcion;
 
