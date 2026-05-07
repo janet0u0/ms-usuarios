@@ -7,28 +7,19 @@ import com.cordillera.msusuarios.model.Usuario;
 import com.cordillera.msusuarios.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * Contiene la lógica de negocio del microservicio.
- *
- * Patrón aplicado: Repository Pattern
- * Accede a datos exclusivamente a través de UsuarioRepository,
- * sin conocer los detalles de la base de datos.
- */
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class UsuarioService {
 
     private final UsuarioRepository repository;
+    private final PasswordEncoder passwordEncoder;
 
-    /**
-     * Convierte entidad Usuario a UsuarioResponseDTO.
-     * Separa la capa de persistencia de la capa de presentación.
-     */
     private UsuarioResponseDTO mapToDTO(Usuario u) {
         return new UsuarioResponseDTO(
                 u.getId(),
@@ -40,9 +31,6 @@ public class UsuarioService {
         );
     }
 
-    /**
-     * Lista todos los usuarios del sistema.
-     */
     public List<UsuarioResponseDTO> listarTodos() {
         log.info("Listando todos los usuarios");
         return repository.findAll()
@@ -51,70 +39,55 @@ public class UsuarioService {
                 .toList();
     }
 
-    /**
-     * Busca un usuario por ID.
-     * Lanza ResourceNotFoundException si no existe.
-     */
     public UsuarioResponseDTO buscarPorId(Long id) {
         log.info("Buscando usuario con ID: {}", id);
         Usuario usuario = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(
-                        "Usuario no encontrado con ID: " + id));
+                    "Usuario no encontrado con ID: " + id));
         return mapToDTO(usuario);
     }
 
-    /**
-     * Crea un nuevo usuario.
-     * Valida que el email no esté duplicado.
-     */
     public UsuarioResponseDTO guardar(UsuarioRequestDTO dto) {
         log.info("Creando nuevo usuario con email: {}", dto.getEmail());
-
         if (repository.existsByEmail(dto.getEmail())) {
             throw new IllegalArgumentException(
-                    "El email ya está registrado: " + dto.getEmail());
+                "El email ya está registrado: " + dto.getEmail());
         }
-
         Usuario usuario = new Usuario();
         usuario.setNombre(dto.getNombre());
         usuario.setEmail(dto.getEmail());
-        usuario.setPassword(dto.getPassword());
+        usuario.setPassword(passwordEncoder.encode(dto.getPassword()));
         usuario.setRol(dto.getRol());
-
         return mapToDTO(repository.save(usuario));
     }
 
-    /**
-     * Actualiza un usuario existente.
-     * Lanza ResourceNotFoundException si no existe.
-     */
-    public UsuarioResponseDTO actualizar(Long id, UsuarioRequestDTO dto) {
-        log.info("Actualizando usuario con ID: {}", id);
+    public UsuarioResponseDTO login(String email, String password) {
+        log.info("Intento de login para: {}", email);
+        Usuario usuario = repository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                    "Credenciales inválidas"));
 
+        if (!passwordEncoder.matches(password, usuario.getPassword())) {
+            throw new IllegalArgumentException("Credenciales inválidas");
+        }
+        return mapToDTO(usuario);
+    }
+
+    public UsuarioResponseDTO actualizar(Long id, UsuarioRequestDTO dto) {
         Usuario actual = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(
-                        "Usuario no encontrado con ID: " + id));
-
+                    "Usuario no encontrado"));
         actual.setNombre(dto.getNombre());
         actual.setEmail(dto.getEmail());
-        actual.setPassword(dto.getPassword());
+        actual.setPassword(passwordEncoder.encode(dto.getPassword()));
         actual.setRol(dto.getRol());
-
         return mapToDTO(repository.save(actual));
     }
 
-    /**
-     * Elimina un usuario por ID.
-     * Lanza ResourceNotFoundException si no existe.
-     */
     public void eliminar(Long id) {
-        log.info("Eliminando usuario con ID: {}", id);
-
         if (!repository.existsById(id)) {
-            throw new ResourceNotFoundException(
-                    "Usuario no encontrado con ID: " + id);
+            throw new ResourceNotFoundException("Usuario no encontrado");
         }
-
         repository.deleteById(id);
     }
 }
