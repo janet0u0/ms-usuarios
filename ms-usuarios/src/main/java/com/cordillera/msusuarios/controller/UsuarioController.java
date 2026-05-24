@@ -17,7 +17,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/usuarios")
-@RequiredArgsConstructor // ✅ reemplaza constructor manual
+@RequiredArgsConstructor
 public class UsuarioController {
 
     private final UsuarioService service;
@@ -27,7 +27,7 @@ public class UsuarioController {
      */
     @PostMapping("/login")
     public ResponseEntity<UsuarioResponseDTO> login(
-            @RequestBody UsuarioRequestDTO dto) {
+            @Valid @RequestBody UsuarioRequestDTO dto) {
         UsuarioResponseDTO usuario = service.login(
             dto.getEmail(), dto.getPassword());
         return ResponseEntity.ok(usuario);

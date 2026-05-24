@@ -66,17 +66,27 @@ public class UsuarioService {
         Usuario usuario = repository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException(
                     "Credenciales inválidas"));
-
         if (!passwordEncoder.matches(password, usuario.getPassword())) {
             throw new IllegalArgumentException("Credenciales inválidas");
         }
         return mapToDTO(usuario);
     }
 
+    // ✅ CORREGIDO: verifica email duplicado antes de actualizar
     public UsuarioResponseDTO actualizar(Long id, UsuarioRequestDTO dto) {
+        log.info("Actualizando usuario con ID: {}", id);
+
         Usuario actual = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(
-                    "Usuario no encontrado"));
+                    "Usuario no encontrado con ID: " + id));
+
+        // Si el email cambió, verificar que no lo tenga otro usuario
+        if (!actual.getEmail().equals(dto.getEmail())
+                && repository.existsByEmail(dto.getEmail())) {
+            throw new IllegalArgumentException(
+                "El email ya está registrado: " + dto.getEmail());
+        }
+
         actual.setNombre(dto.getNombre());
         actual.setEmail(dto.getEmail());
         actual.setPassword(passwordEncoder.encode(dto.getPassword()));
