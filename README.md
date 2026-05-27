@@ -89,35 +89,52 @@ POST /api/usuarios/login
 | SUPERVISOR | Administrador de Datos |
 | ADMIN_SISTEMA | Administrador del Sistema |
 
-## Estructura del proyecto
+## 📂 Estructura del Proyecto MS-USUARIOS
+
+```text
 ms-usuarios/
 ├── src/
 │   ├── main/
-│   │   ├── java/com/cordillera/msusuarios/
-│   │   │   ├── config/
-│   │   │   │   ├── CorsConfig.java
-│   │   │   │   └── SecurityConfig.java
-│   │   │   ├── controller/
-│   │   │   │   ├── LoginController.java
-│   │   │   │   └── UsuarioController.java
-│   │   │   ├── dto/
-│   │   │   │   ├── UsuarioRequestDTO.java
-│   │   │   │   └── UsuarioResponseDTO.java
-│   │   │   ├── exception/
-│   │   │   │   └── ResourceNotFoundException.java
-│   │   │   ├── model/
-│   │   │   │   ├── Rol.java
-│   │   │   │   └── Usuario.java
-│   │   │   ├── repository/
-│   │   │   │   └── UsuarioRepository.java
-│   │   │   └── service/
-│   │   │       └── UsuarioService.java
+│   │   ├── config/
+│   │   ├── controller/
+│   │   ├── dto/
+│   │   ├── exception/
+│   │   ├── model/
+│   │   ├── repository/
+│   │   ├── service/
 │   │   └── resources/
-│   │       └── application.properties
 │   └── test/
 ├── docker-compose.yml
 ├── pom.xml
 └── README.md
+```
+
+## 📌 Componentes principales
+
+```text
+config/       → Configuración de seguridad y CORS
+controller/   → Endpoints REST y autenticación
+dto/          → Transferencia de datos
+exception/    → Manejo de excepciones
+model/        → Entidades del sistema
+repository/   → Acceso a datos con JPA
+service/      → Lógica de negocio
+resources/    → Configuración de Spring Boot
+```
+
+## 🏗 Arquitectura del Microservicio
+
+```text
+Cliente
+   ↓
+Controller
+   ↓
+Service
+   ↓
+Repository
+   ↓
+MySQL
+```
 ## Seguridad
 - Passwords encriptados con BCrypt
 - Roles definidos: EJECUTIVO, ANALISTA, SUPERVISOR, ADMIN_SISTEMA
