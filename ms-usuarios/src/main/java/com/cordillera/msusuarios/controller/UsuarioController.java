@@ -2,6 +2,7 @@ package com.cordillera.msusuarios.controller;
 
 import com.cordillera.msusuarios.dto.UsuarioRequestDTO;
 import com.cordillera.msusuarios.dto.UsuarioResponseDTO;
+import com.cordillera.msusuarios.dto.LoginRequestDTO;
 import com.cordillera.msusuarios.service.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,24 +24,29 @@ public class UsuarioController {
     private final UsuarioService service;
 
     /**
-     * POST /api/usuarios/login
+     * LOGIN
      */
     @PostMapping("/login")
     public ResponseEntity<UsuarioResponseDTO> login(
-            @Valid @RequestBody UsuarioRequestDTO dto) {
+            @Valid @RequestBody LoginRequestDTO dto) {
+
         UsuarioResponseDTO usuario = service.login(
-            dto.getEmail(), dto.getPassword());
+                dto.getEmail(),
+                dto.getPassword()
+        );
+
         return ResponseEntity.ok(usuario);
     }
 
     /**
-     * POST /api/usuarios/registrar
+     * REGISTRAR
      */
     @PostMapping("/registrar")
     public ResponseEntity<UsuarioResponseDTO> registrar(
             @Valid @RequestBody UsuarioRequestDTO dto) {
+
         return ResponseEntity.status(HttpStatus.CREATED)
-            .body(service.guardar(dto));
+                .body(service.guardar(dto));
     }
 
     @GetMapping
@@ -51,6 +57,7 @@ public class UsuarioController {
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioResponseDTO> buscar(
             @PathVariable Long id) {
+
         return ResponseEntity.ok(service.buscarPorId(id));
     }
 
@@ -58,6 +65,7 @@ public class UsuarioController {
     public ResponseEntity<UsuarioResponseDTO> actualizar(
             @PathVariable Long id,
             @Valid @RequestBody UsuarioRequestDTO dto) {
+
         return ResponseEntity.ok(service.actualizar(id, dto));
     }
 
