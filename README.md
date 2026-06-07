@@ -1,8 +1,9 @@
-# MS-Usuarios - Grupo Cordillera
+Este es el README de ms-usuarios. Pega esto en GitHub:
+markdown# 👤 MS-Usuarios - Grupo Cordillera
 
 Microservicio de gestión de usuarios con autenticación y control de acceso basado en roles (RBAC).
 
-## Tecnologías
+## 🛠️ Tecnologías
 - Java 17
 - Spring Boot 3.3.5
 - Spring Security (BCrypt)
@@ -12,56 +13,56 @@ Microservicio de gestión de usuarios con autenticación y control de acceso bas
 - Lombok
 - Maven
 
-## Patrones Aplicados
+## 🎯 Patrones Aplicados
 - **Repository Pattern**: Abstrae el acceso a la base de datos
 - **DTO Pattern**: Separa el modelo interno de la API
-- **RBAC**: Control de acceso basado en roles (EJECUTIVO, ANALISTA, SUPERVISOR, ADMIN_SISTEMA)
+- **RBAC**: Control de acceso basado en roles
 
-## Requisitos
+## ✅ Requisitos
 - Java 17
 - Docker Desktop
 - Maven
 
-## Instalación y Ejecución
+## 🚀 Instalación y Ejecución
 
-### 1. Clonar el repositorio
+### Opción 1: Docker (recomendado)
 ```bash
-git clone <url-del-repositorio>
+docker compose up --build
+```
+
+### Opción 2: Local
+
+**1. Clonar el repositorio**
+```bash
+git clone https://github.com/janet0u0/ms-usuarios
 cd ms-usuarios
 ```
 
-### 2. Levantar MySQL con Docker
+**2. Levantar MySQL con Docker**
 ```bash
 docker-compose up -d
 ```
 
-### 3. Ejecutar el microservicio
+**3. Ejecutar el microservicio**
 ```bash
 .\mvnw spring-boot:run
 ```
+Disponible en `http://localhost:8081`
 
-El servicio quedará disponible en `http://localhost:8081`
+## 🔗 Endpoints
 
-## Endpoints
-
-### Autenticación
 | Método | Endpoint | Descripción |
 |--------|----------|-------------|
-| POST | /api/auth/login | Login alternativo |
-
-### Usuarios
-| Método | Endpoint | Descripción |
-|--------|----------|-------------|
+| POST | /api/usuarios/login | Autenticar usuario |
+| POST | /api/usuarios/registrar | Registrar nuevo usuario |
 | GET | /api/usuarios | Listar todos los usuarios |
 | GET | /api/usuarios/{id} | Buscar usuario por ID |
-| POST | /api/usuarios/registrar | Registrar nuevo usuario |
-| POST | /api/usuarios/login | Autenticar usuario |
 | PUT | /api/usuarios/{id} | Actualizar usuario |
 | DELETE | /api/usuarios/{id} | Eliminar usuario |
 
-## Ejemplo de uso
+## 📝 Ejemplo de uso
 
-### Registrar usuario
+**Registrar usuario**
 ```json
 POST /api/usuarios/registrar
 {
@@ -72,7 +73,7 @@ POST /api/usuarios/registrar
 }
 ```
 
-### Login
+**Login**
 ```json
 POST /api/usuarios/login
 {
@@ -81,15 +82,20 @@ POST /api/usuarios/login
 }
 ```
 
-### Roles disponibles
+## 👥 Roles disponibles
+
 | Rol | Descripción |
 |-----|-------------|
 | EJECUTIVO | Alta Gerencia |
 | ANALISTA | Analista de Negocio |
-| SUPERVISOR | Administrador de Datos |
+| SUPERVISOR | Supervisor de Operaciones |
 | ADMIN_SISTEMA | Administrador del Sistema |
 
-## 📂 Estructura del Proyecto MS-USUARIOS
+## 🔒 Seguridad
+- Passwords encriptados con BCrypt
+- CORS configurado para localhost:3000
+
+## 📂 Estructura del Proyecto
 
 ```text
 ms-usuarios/
@@ -105,6 +111,7 @@ ms-usuarios/
 │   │   └── resources/
 │   └── test/
 ├── docker-compose.yml
+├── Dockerfile
 ├── pom.xml
 └── README.md
 ```
@@ -112,30 +119,25 @@ ms-usuarios/
 ## 📌 Componentes principales
 
 ```text
-config/       → Configuración de seguridad y CORS
-controller/   → Endpoints REST y autenticación
+config/       → Seguridad y CORS
+controller/   → Endpoints REST
 dto/          → Transferencia de datos
-exception/    → Manejo de excepciones
-model/        → Entidades del sistema
-repository/   → Acceso a datos con JPA
+exception/    → Manejo de errores
+model/        → Entidades JPA
+repository/   → Acceso a base de datos
 service/      → Lógica de negocio
-resources/    → Configuración de Spring Boot
+resources/    → Configuración
 ```
 
-## 🏗 Arquitectura del Microservicio
+## 🏗️ Flujo del Microservicio
 
 ```text
-Cliente
-   ↓
-Controller
-   ↓
-Service
-   ↓
-Repository
-   ↓
-MySQL
+Cliente → Controller → Service → Repository → MySQL
 ```
-## Seguridad
-- Passwords encriptados con BCrypt
-- Roles definidos: EJECUTIVO, ANALISTA, SUPERVISOR, ADMIN_SISTEMA
-- CORS configurado para localhost:4200 y localhost:3000
+
+## 📡 Monitoreo
+
+```
+GET http://localhost:8081/actuator/health
+GET http://localhost:8081/actuator/info
+```
