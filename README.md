@@ -1,5 +1,4 @@
-
-markdown# 👤 MS-Usuarios - Grupo Cordillera
+👤 MS-Usuarios - Grupo Cordillera
 
 Microservicio de gestión de usuarios con autenticación y control de acceso basado en roles (RBAC).
 
