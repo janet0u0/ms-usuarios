@@ -100,17 +100,53 @@ POST /api/usuarios/login
 ms-usuarios/
 ├── src/
 │   ├── main/
-│   │   ├── config/
-│   │   ├── controller/
-│   │   ├── dto/
-│   │   ├── exception/
-│   │   ├── model/
-│   │   ├── repository/
-│   │   ├── service/
-│   │   └── resources/
-│   └── test/
-├── docker-compose.yml
+│   │   ├── java/com/cordillera/msusuarios/
+│   │   │   ├── config/
+│   │   │   │   ├── CorsConfig.java
+│   │   │   │   └── SecurityConfig.java
+│   │   │   ├── controller/
+│   │   │   │   └── UsuarioController.java
+│   │   │   ├── dto/
+│   │   │   │   ├── LoginRequestDTO.java
+│   │   │   │   ├── UsuarioRequestDTO.java
+│   │   │   │   └── UsuarioResponseDTO.java
+│   │   │   ├── exception/
+│   │   │   │   ├── GlobalExceptionHandler.java
+│   │   │   │   └── ResourceNotFoundException.java
+│   │   │   ├── model/
+│   │   │   │   ├── Rol.java
+│   │   │   │   └── Usuario.java
+│   │   │   ├── repository/
+│   │   │   │   └── UsuarioRepository.java
+│   │   │   ├── service/
+│   │   │   │   └── UsuarioService.java
+│   │   │   └── MsUsuariosApplication.java
+│   │
+│   ├── test/
+│   │   ├── java/com/cordillera/msusuarios/
+│   │   │   ├── config/
+│   │   │   │   └── SecurityConfigTest.java
+│   │   │   ├── controller/
+│   │   │   │   └── UsuarioControllerTest.java
+│   │   │   ├── dto/
+│   │   │   │   ├── LoginRequestDTOTest.java
+│   │   │   │   ├── UsuarioRequestDTOTest.java
+│   │   │   │   └── UsuarioResponseDTOTest.java
+│   │   │   ├── exception/
+│   │   │   │   ├── GlobalExceptionHandlerTest.java
+│   │   │   │   └── ResourceNotFoundExceptionTest.java
+│   │   │   ├── repository/
+│   │   │   │   └── UsuarioRepositoryTest.java
+│   │   │   ├── service/
+│   │   │   │   └── UsuarioServiceTest.java
+│   │   │   └── MsUsuariosApplicationTests.java
+│   │
+│   └── resources/
+│       ├── application.properties
+│       └── application-test.properties
+│
 ├── Dockerfile
+├── docker-compose.yml
 ├── pom.xml
 └── README.md
 ```
