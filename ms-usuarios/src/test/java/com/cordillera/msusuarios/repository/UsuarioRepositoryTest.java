@@ -23,17 +23,14 @@ class UsuarioRepositoryTest {
     @DisplayName("Debe guardar usuario correctamente")
     void guardar_CuandoUsuarioEsValido_DeberiaPersistirDatos() {
 
-        // Arrange
         Usuario usuario = new Usuario();
         usuario.setNombre("Janet");
         usuario.setEmail("janet@test.com");
         usuario.setPassword("123");
         usuario.setRol(Rol.ADMIN_SISTEMA);
 
-        // Act
         Usuario resultado = repository.save(usuario);
 
-        // Assert
         assertNotNull(resultado);
         assertNotNull(resultado.getId());
         assertEquals("Janet", resultado.getNombre());
@@ -44,7 +41,6 @@ class UsuarioRepositoryTest {
     @DisplayName("Debe buscar usuario por email")
     void findByEmail_CuandoUsuarioExiste_DeberiaRetornarUsuario() {
 
-        // Arrange
         Usuario usuario = new Usuario();
         usuario.setNombre("Janet");
         usuario.setEmail("janet@test.com");
@@ -53,10 +49,9 @@ class UsuarioRepositoryTest {
 
         repository.save(usuario);
 
-        // Act
-        Optional<Usuario> resultado = repository.findByEmail("janet@test.com");
+        Optional<Usuario> resultado =
+                repository.findByEmail("janet@test.com");
 
-        // Assert
         assertTrue(resultado.isPresent());
         assertEquals("Janet", resultado.get().getNombre());
         assertEquals("janet@test.com", resultado.get().getEmail());
@@ -66,7 +61,6 @@ class UsuarioRepositoryTest {
     @DisplayName("Debe verificar si email existe")
     void existsByEmail_CuandoEmailExiste_DeberiaRetornarTrue() {
 
-        // Arrange
         Usuario usuario = new Usuario();
         usuario.setNombre("Janet");
         usuario.setEmail("janet@test.com");
@@ -75,27 +69,52 @@ class UsuarioRepositoryTest {
 
         repository.save(usuario);
 
-        // Act
-        boolean existe = repository.existsByEmail("janet@test.com");
+        boolean existe =
+                repository.existsByEmail("janet@test.com");
 
-        // Assert
         assertTrue(existe);
     }
 
     @Test
     @DisplayName("Debe ejecutar preUpdate al modificar usuario")
     void preUpdate_CuandoSeActualiza_DeberiaActualizarFecha() {
-         Usuario u = new Usuario();
-            u.setNombre("Test"); u.setEmail("test@test.com");
-            u.setPassword("123"); u.setRol(Rol.ANALISTA);
-            u.prePersist();
-         Usuario guardado = repository.save(u);
+
+        Usuario u = new Usuario();
+        u.setNombre("Test");
+        u.setEmail("test@test.com");
+        u.setPassword("123");
+        u.setRol(Rol.ANALISTA);
+
+        u.prePersist();
+
+        Usuario guardado = repository.save(u);
 
         guardado.setNombre("Test Actualizado");
         guardado.preUpdate();
+
         Usuario actualizado = repository.save(guardado);
 
         assertNotNull(actualizado.getActualizadoEn());
         assertEquals("Test Actualizado", actualizado.getNombre());
-  }
+    }
+
+    @Test
+    @DisplayName("Debe ejecutar prePersist al crear usuario")
+    void prePersist_CuandoSeCreaUsuario_DeberiaAsignarFechas() {
+
+        Usuario usuario = new Usuario();
+        usuario.setNombre("Janet");
+        usuario.setEmail("janet2@test.com");
+        usuario.setPassword("123");
+        usuario.setRol(Rol.ADMIN_SISTEMA);
+
+        usuario.prePersist();
+
+        assertNotNull(usuario.getCreadoEn());
+        assertNotNull(usuario.getActualizadoEn());
+        assertEquals(
+                usuario.getCreadoEn(),
+                usuario.getActualizadoEn()
+        );
+    }
 }
