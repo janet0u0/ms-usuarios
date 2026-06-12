@@ -3,11 +3,15 @@
 Microservicio de gestión de usuarios con autenticación y control de acceso basado en roles (RBAC).
 
 ## 🛠️ Tecnologías
+## 🛠️ Tecnologías
 - Java 17
 - Spring Boot 3.3.5
-- Spring Security (BCrypt)
+- Spring Security
 - Spring Data JPA
 - MySQL 8.0
+- JUnit 5
+- Mockito
+- JaCoCo
 - Docker
 - Lombok
 - Maven
@@ -169,6 +173,57 @@ repository/   → Acceso a base de datos
 service/      → Lógica de negocio
 resources/    → Configuración
 ```
+## 🧪 Pruebas Unitarias y Cobertura
+
+El microservicio cuenta con pruebas unitarias y de integración para validar la lógica de negocio, repositorios, controladores, configuración y manejo de excepciones.
+
+### Herramientas utilizadas
+
+* JUnit 5
+* Mockito
+* Spring Boot Test
+* JaCoCo
+
+### Cobertura de Código
+
+| Paquete     | Cobertura |
+| ----------- | --------- |
+| service     | 100%      |
+| controller  | 100%      |
+| repository  | 100%      |
+| config      | 100%      |
+| exception   | 100%      |
+| model       | 100%      |
+| application | 100%      |
+
+**Cobertura Total del Proyecto:** 100%
+
+### Ejecutar pruebas
+
+```bash
+.\mvnw test
+```
+
+### Generar reporte JaCoCo
+
+```bash
+.\mvnw clean test jacoco:report
+```
+
+Reporte generado en:
+
+```text
+target/site/jacoco/index.html
+```
+
+### Resultados
+
+* Instrucciones cubiertas: 100%
+* Métodos cubiertos: 100%
+* Clases cubiertas: 100%
+* Ramas cubiertas: 100%
+* Tests exitosos: 37/37
+
 
 ## 🏗️ Flujo del Microservicio
 
