@@ -3,7 +3,6 @@
 Microservicio de gestión de usuarios con autenticación y control de acceso basado en roles (RBAC).
 
 ## 🛠️ Tecnologías
-## 🛠️ Tecnologías
 - Java 17
 - Spring Boot 3.3.5
 - Spring Security
